@@ -19,7 +19,7 @@ public class ClienteResource {
 	
 	@RequestMapping(value = "/{id}",method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Cliente cat = service.buscar(id);
+		Cliente cat = service.find(id);
 		return ResponseEntity.ok().body(cat);
 	}
 	
