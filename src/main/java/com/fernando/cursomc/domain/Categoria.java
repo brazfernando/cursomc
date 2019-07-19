@@ -26,7 +26,6 @@ public class Categoria implements Serializable {
 	 * O MappedBy referencia a instancia de categorias
 	 * mapeada dentro da entidade produto.
 	 * */
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
