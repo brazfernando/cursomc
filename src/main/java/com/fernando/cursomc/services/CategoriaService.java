@@ -20,5 +20,10 @@ public class CategoriaService {
 		}
 		return obj;
 	}
+	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repositorio.save(obj);
+	}
 
 }
