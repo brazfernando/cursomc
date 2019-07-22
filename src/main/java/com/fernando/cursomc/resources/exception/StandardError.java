@@ -9,10 +9,6 @@ public class StandardError implements Serializable {
 	private String msg;
 	private Long timeStamp;
 	
-	public StandardError() {
-		// TODO Auto-generated constructor stub
-	}
-	
 
 	public StandardError(Integer status, String msg, Long timeStamp) {
 		super();
@@ -20,8 +16,6 @@ public class StandardError implements Serializable {
 		this.msg = msg;
 		this.timeStamp = timeStamp;
 	}
-
-
 
 	public Integer getStatus() {
 		return status;
