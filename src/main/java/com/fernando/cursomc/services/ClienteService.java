@@ -37,6 +37,12 @@ public class ClienteService {
 		return obj;
 	}
 	
+	public Cliente findByEmail(String email) {
+		Cliente obj = repositorio.findByEmail(email);
+		return obj;
+	}
+	
+	
 	@Transactional
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
