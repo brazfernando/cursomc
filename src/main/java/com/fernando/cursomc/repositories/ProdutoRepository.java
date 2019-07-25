@@ -20,7 +20,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	/**
 	 * 
 	 * CDU:
-	 * Recuperar todos produtos cujo nome contenha um dado string, e que pertença a pelo menos uma
+	 * Recuperar todos produtos cujo nome continue um dado string, e que pertença a pelo menos uma
 	 * categoria dentre as categorias de uma lista
 	 * 
 	 * 
