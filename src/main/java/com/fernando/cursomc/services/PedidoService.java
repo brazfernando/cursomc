@@ -3,12 +3,8 @@ package com.fernando.cursomc.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.fernando.cursomc.domain.Cliente;
 import com.fernando.cursomc.domain.ItemPedido;
 import com.fernando.cursomc.domain.PagamentoComBoleto;
 import com.fernando.cursomc.domain.Pedido;
@@ -40,6 +36,9 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	
 	public Pedido find(Integer id) {
 		Pedido obj = repo.findOne(id);
@@ -68,8 +67,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.save(obj.getItens());
-		System.out.println(obj);
-		
+		emailService.emailConfirmacaoPedido(obj);
 		return obj;
 	}
 	
