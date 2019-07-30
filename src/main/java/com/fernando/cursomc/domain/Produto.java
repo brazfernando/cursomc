@@ -11,17 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,14 +30,13 @@ public class Produto implements Serializable {
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-	private List<Categoria> categorias = new ArrayList<Categoria>();
-	
+	private List<Categoria> categorias = new ArrayList<>();
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
-	private Set<ItemPedido> itens = new HashSet<ItemPedido>();
+	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Produto() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Produto(Integer id, String nome, Double preco) {
@@ -49,14 +45,14 @@ public class Produto implements Serializable {
 		this.nome = nome;
 		this.preco = preco;
 	}
-	
+
 	@JsonIgnore
-	public List<Pedido> getPedidos(){
-		List<Pedido> pedidos = new ArrayList<Pedido>();
-		for(ItemPedido ip : this.itens) {
-			pedidos.add(ip.getPedido());
+	public List<Pedido> getPedidos() {
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
 		}
-		return pedidos;
+		return lista;
 	}
 
 	public Integer getId() {
@@ -90,7 +86,7 @@ public class Produto implements Serializable {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	
+
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
@@ -123,6 +119,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-
 
 }
