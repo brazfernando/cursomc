@@ -23,7 +23,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(email);
 		}
 		
-		return new UserSpringSecurity();
+		return new UserSpringSecurity(cli.getId(), cli.getEmail(), cli.getSenha(), cli.getPerfis());
 	}
 
 }

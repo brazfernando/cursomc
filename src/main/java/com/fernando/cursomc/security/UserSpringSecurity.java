@@ -2,6 +2,7 @@ package com.fernando.cursomc.security;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,8 +30,7 @@ public class UserSpringSecurity implements UserDetails {
 		this.id = id;
 		this.email = email;
 		this.senha = senha;
-		//TODO: começar a aula 68, avançar até o meio, problema com o FLASH
-		//this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao()))
+		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
 	}
 	
 	public Integer getId() {
