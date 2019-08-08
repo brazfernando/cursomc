@@ -11,16 +11,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTUtil {
 
-	@Value("$(jwt.secret)")
+	@Value("${jwt.secret}")
 	private String secret;
-	
-	@Value("$(jwt.expiration)")
-	private String expiration;
+
+	@Value("${jwt.expiration}")
+	private Long expiration;
 	
 	public String generateToken(String username) {
 		return Jwts.builder()
 				.setSubject(username)
-				.setExpiration(new Date(System.currentTimeMillis() + new Long(expiration)))
+				.setExpiration(new Date(System.currentTimeMillis() + expiration))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				.compact();
 	}

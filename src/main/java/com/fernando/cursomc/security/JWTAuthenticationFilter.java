@@ -1,6 +1,7 @@
 package com.fernando.cursomc.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -8,35 +9,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fernando.cursomc.dto.CredenciaisDTO;
+
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
-	
+
 	private AuthenticationManager authenticationManager;
-	
+
 	private JWTUtil jwtUtil;
-	
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
 	}
-	
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		// TODO Auto-generated method stub
-		return super.attemptAuthentication(request, response);
+		try {
+			CredenciaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
+			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(),
+					creds.getSenha(), new ArrayList<>());
+			Authentication auth = authenticationManager.authenticate(authToken);
+			return auth;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
-	
+
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		super.successfulAuthentication(request, response, chain, authResult);
+
+		String userName = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
+		String token = jwtUtil.generateToken(userName);
+		response.addHeader("Authorization", "Bearer" + token);
 	}
-	
+
 }
