@@ -29,7 +29,8 @@ public class JWTUtil {
 			String userName = reivindicacoes.getSubject();
 			Date expirationDate = reivindicacoes.getExpiration();
 			Date now = new Date(System.currentTimeMillis());
-			if(userName != null && expirationDate != null && expirationDate.before(now)) {
+			if(userName != null && expirationDate != null && now.before(expirationDate)) {
+				System.out.println("OEEEE");
 				return true;
 			}
 		}
